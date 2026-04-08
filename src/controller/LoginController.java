@@ -2,6 +2,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.User;
@@ -28,21 +29,40 @@ public class LoginController {
 
 
 
+    @FXML
+    private CheckBox showPasswordCheckBox;
+
+    @FXML
+    public void initialize() {
+        passwordTextField.textProperty().bindBidirectional(passwordPasswordField.textProperty());
+        passwordTextField.setVisible(false);
+    }
+
     public void login(ActionEvent event) throws IOException {
 
+        String mail = email.getText();
+        String pass = passwordTextField.getText() != null && !passwordTextField.getText().isEmpty() ? passwordTextField.getText() : passwordPasswordField.getText();
 
-            User user = userRepository.getByEmailAndPassword(email.getText(), passwordTextField.getText());
+        if (mail == null || mail.trim().isEmpty() || pass == null || pass.trim().isEmpty()) {
+            Alerts.showError("Please enter your email and password.");
+            return;
+        }
 
+        if (!mail.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            Alerts.showError("Please enter a valid email address.");
+            return;
+        }
 
-            if(user == null) {
-                Alerts.showInformation("Invalid email or password");
-            }
-            else{
+        User user = userRepository.getByEmailAndPassword(mail, pass);
 
-                Session.setUser(user);
-                Alerts.showInformation("Login Successful");
-                sceneChanger.changeScene("/view/fxml/Menu.fxml","Menu",event);
-            }
+        if(user == null) {
+            Alerts.showError("Invalid email or password");
+        }
+        else{
+            Session.setUser(user);
+            Alerts.showInformation("Login Successful");
+            sceneChanger.changeScene("/view/fxml/Menu.fxml","Menu",event);
+        }
     }
 
     public void forgotPassword(ActionEvent event) throws IOException {
@@ -53,8 +73,10 @@ public class LoginController {
         sceneChanger.changeScene("/view/fxml/Register.fxml","Register",event);
     }
 
-    public void togglePassword(ActionEvent event) throws IOException {
-
+    public void togglePassword(ActionEvent event) {
+        boolean show = showPasswordCheckBox.isSelected();
+        passwordTextField.setVisible(show);
+        passwordPasswordField.setVisible(!show);
     }
 
     public void back(ActionEvent event) throws IOException {

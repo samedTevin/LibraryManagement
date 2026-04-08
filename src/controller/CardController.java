@@ -23,13 +23,35 @@ public class CardController {
     @FXML
     private ImageView bookImage;
 
+    @FXML
+    private Label bookId;
+
 
     public void setData(Book book) {
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(book.getImageSrc())));
-        bookImage.setImage(image);
+        String path = book.getImageSrc();
+        try {
+            if (path != null && !path.isEmpty()) {
+                if (path.startsWith("/view/assets")) {
+                    bookImage.setImage(new Image(getClass().getResourceAsStream(path)));
+                } else {
+                    java.io.File file = new java.io.File(path);
+                    if (file.exists()) {
+                        bookImage.setImage(new Image(file.toURI().toString()));
+                    } else {
+                        bookImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
+                    }
+                }
+            } else {
+                bookImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
+            }
+        } catch (Exception e) {
+            try {
+                bookImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
+            } catch (Exception ex) {/* ignore */}
+        }
 
+        bookId.setText("#" + book.getId());
         bookName.setText(book.getTitle());
-
         authorName.setText(book.getAuthor());
     }
 

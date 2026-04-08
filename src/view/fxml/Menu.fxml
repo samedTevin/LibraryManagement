@@ -17,24 +17,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<BorderPane prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: #f4f6f9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1500.0" spacing="20.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="61.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="55.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/shelfaware_logo_framed.png" />
                </image>
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                </HBox.margin>
             </ImageView>
-            <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="49.0" prefWidth="4.0" />
-            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="35.0" prefWidth="290.0">
+            <Separator orientation="VERTICAL" prefHeight="40.0" prefWidth="4.0" />
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="350.0">
                <children>
                   <StackPane alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="347.0">
                      <children>
-                        <TextField prefHeight="31.0" prefWidth="268.0" promptText="Search">
+                        <TextField prefHeight="40.0" prefWidth="347.0" promptText="Global Search..." style="-fx-background-radius: 20px; -fx-border-radius: 20px; -fx-border-color: #e0e0e0; -fx-background-color: #f9f9f9; -fx-padding: 5 15 5 15;">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -44,29 +44,30 @@
                               <Image url="@../assets/icon_search_20.png" />
                            </image>
                            <StackPane.margin>
-                              <Insets right="5.0" />
+                              <Insets right="15.0" />
                            </StackPane.margin>
                         </ImageView>
                      </children>
                   </StackPane>
                </children>
             </HBox>
-            <Pane prefHeight="100.0" prefWidth="739.0" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="274.0">
+            <Pane prefHeight="70.0" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER" prefHeight="70.0" spacing="15.0">
                <children>
-                  <ImageView fx:id="profileImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
+                  <ImageView fx:id="profileImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2);">
                      <image>
                         <Image url="@../assets/people.png" />
-                     </image></ImageView>
-                  <Label fx:id="profileName" prefHeight="96.0" prefWidth="160.0" text="Samed Tevin">
+                     </image>
+                  </ImageView>
+                  <Label fx:id="profileName" prefHeight="70.0" text="Samed Tevin" textFill="#333333">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
             </HBox>
          </children>
          <padding>
@@ -75,241 +76,229 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="200.0" prefWidth="250.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="730.0" prefWidth="250.0" spacing="5.0" style="-fx-background-color: #2c3e50; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 5, 0);" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="159.0" prefWidth="250.0" spacing="10.0">
+            
+            <Label text="BROWSE" textFill="#95a5a6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="20.0" bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
                <children>
-                  <Label prefHeight="38.0" prefWidth="101.0" text="Browse">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/menu_icon_all_books.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#goToBooks" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Directory">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="48.0" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/menu_icon_all_books.png" />
-                           </image></ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToBooks" prefHeight="30.0" prefWidth="120.0" text="Books">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Button>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="98.0" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/menu_icon_members_nav.png" />
-                           </image></ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToMembers" prefHeight="30.0" prefWidth="120.0" text="Members">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Button>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
+                  </Button>
                </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" prefHeight="56.0" prefWidth="250.0" spacing="10.0">
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
                <children>
-                  <Label prefHeight="33.0" prefWidth="151.0" text="Book Management">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/menu_icon_members_nav.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#goToMembers" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Members">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="41.0" prefWidth="250.0" spacing="15.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/icon_category_30.png" />
-                           </image>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToBookManagement" prefHeight="44.0" prefWidth="120.0" text="Books+">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Button>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
+                  </Button>
                </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="253.0" prefHeight="56.0" prefWidth="250.0" spacing="10.0">
+            </HBox>
+            
+            <Separator style="-fx-opacity: 0.2; -fx-background-color: white;" />
+            
+            <Label text="MANAGEMENT" textFill="#95a5a6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
                <children>
-                  <Label prefHeight="21.0" prefWidth="174.0" text="Member Management">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/icon_category_30.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#goToBookManagement" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Inventory Set">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="41.0" prefWidth="250.0" spacing="15.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/menu_icon_members_mgmt.png" />
-                           </image>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToMemberManagement" prefHeight="44.0" prefWidth="120.0" text="Member+">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
+                  </Button>
                </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="114.0" prefHeight="96.0" prefWidth="250.0" spacing="10.0">
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
                <children>
-                  <Label prefHeight="25.0" prefWidth="189.0" text="Circulation Management">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/menu_icon_members_mgmt.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#goToMemberManagement" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Member Panel">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/menu_icon_manage.png" />
-                           </image>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToCirculation" prefHeight="30.0" prefWidth="120.0" text="Manage">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
+                  </Button>
                </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="223.0" prefHeight="82.0" prefWidth="250.0" spacing="10.0">
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
                <children>
-                  <Label prefHeight="38.0" prefWidth="101.0" text="Statistics">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/menu_icon_manage.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#goToCirculation" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Circulation Flow">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/menu_icon_statistics.png" />
-                           </image>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToStatistics" prefHeight="30.0" prefWidth="120.0" text="View Statistics">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Button>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
+                  </Button>
                </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="337.0" prefHeight="56.0" prefWidth="250.0" spacing="10.0">
+            </HBox>
+
+            <Separator style="-fx-opacity: 0.2; -fx-background-color: white;" />
+
+            <Label text="ANALYTICS" textFill="#95a5a6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
                <children>
-                  <Label prefHeight="21.0" prefWidth="174.0" text="Profile ">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/menu_icon_statistics.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#goToStatistics" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Dashboard Stats">
                      <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="41.0" prefWidth="250.0" spacing="15.0">
+                  </Button>
+               </children>
+            </HBox>
+
+            <Separator style="-fx-opacity: 0.2; -fx-background-color: white;" />
+
+            <VBox VBox.vgrow="ALWAYS" alignment="BOTTOM_CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/menu_icon_profile.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" onAction="#goToProfile" prefHeight="44.0" prefWidth="120.0" text="Settings">
+                        <Button mnemonicParsing="false" onAction="#goToProfile" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-cursor: hand;" text="Profile Settings">
                            <font>
-                              <Font name="Tahoma" size="13.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="632.0" prefHeight="56.0" prefWidth="250.0" spacing="10.0">
-               <children>
-                  <Label prefHeight="21.0" prefWidth="174.0" text="Logout">
-                     <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="41.0" prefWidth="250.0" spacing="15.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="250.0" spacing="15.0">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/menu_icon_logout.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" onAction="#logOut" prefHeight="44.0" prefWidth="120.0" text="Logout">
+                        <Button mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: transparent; -fx-text-fill: #e74c3c; -fx-cursor: hand;" text="Disconnect">
                            <font>
-                              <Font name="Tahoma" size="13.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
                   </HBox>
-                  <Separator prefWidth="200.0" />
                </children>
             </VBox>
+
          </children>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
       </VBox>
    </left>
+   
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="17.0" prefWidth="292.0" text="Recently Added">
+            <Label prefHeight="17.0" prefWidth="292.0" text="Recently Added" textFill="#202124">
                <font>
-                  <Font name="Berlin Sans FB" size="24.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ScrollPane prefHeight="250.0" prefWidth="200.0">
+            <ScrollPane prefHeight="260.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-background: #f4f6f9; -fx-border-color: transparent;">
                <content>
-                  <HBox fx:id="cardLayout" alignment="CENTER_LEFT" prefHeight="229.0" prefWidth="1341.0" spacing="20.0" />
+                  <HBox fx:id="cardLayout" alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 10 10 20 10;" />
                </content>
             </ScrollPane>
-            <Label layoutX="30.0" layoutY="30.0" prefHeight="17.0" prefWidth="292.0" text="Recommended for you">
+            
+            <Separator prefWidth="200.0" />
+            
+            <Label layoutX="30.0" layoutY="30.0" prefHeight="17.0" prefWidth="400.0" text="Recommended for you" textFill="#202124">
                <font>
-                  <Font name="Berlin Sans FB" size="24.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </Label>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-background: #f4f6f9; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                <content>
-                  <GridPane fx:id="bookContainer">
+                  <GridPane fx:id="bookContainer" hgap="25.0" vgap="25.0">
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
+                     <padding>
+                        <Insets bottom="20.0" left="10.0" right="20.0" top="10.0" />
+                     </padding>
                   </GridPane>
                </content>
             </ScrollPane>
          </children>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
          </padding>
       </VBox>
    </center>

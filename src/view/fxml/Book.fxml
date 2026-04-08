@@ -4,10 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="180.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookController">
+<VBox     prefHeight="330.0" prefWidth="180.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BookController">
    <children>
       <ImageView fx:id="bookImage" fitHeight="240.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -16,6 +17,11 @@
       </ImageView>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
          <children>
+            <Label fx:id="bookId" text="#ID" textFill="#999999">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
             <Label fx:id="bookName" prefHeight="31.0" prefWidth="161.0" text="The Prince">
                <font>
                   <Font name="Berlin Sans FB Bold" size="16.0" />
@@ -26,12 +32,41 @@
                   <Font name="Berlin Sans FB" size="15.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/stars_5.png" />
-               </image>
-            </ImageView>
-         </children>
+              <HBox fx:id="ratingHBox" spacing="2.0">
+                 <children>
+                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                          <Image url="@../assets/star_grey.png" />
+                       </image>
+                    </ImageView>
+                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                          <Image url="@../assets/star_grey.png" />
+                       </image>
+                    </ImageView>
+                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                          <Image url="@../assets/star_grey.png" />
+                       </image>
+                    </ImageView>
+                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                          <Image url="@../assets/star_grey.png" />
+                       </image>
+                    </ImageView>
+                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                          <Image url="@../assets/star_grey.png" />
+                       </image>
+                    </ImageView>
+                 </children>
+              </HBox>
+             <Label fx:id="bookCount" text="Available Stock: 0" textFill="#666666">
+                <font>
+                   <Font size="13.0" />
+                </font>
+             </Label>
+          </children>
       </VBox>
    </children>
    <padding>

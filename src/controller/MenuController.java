@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Comparator;
+import repository.BookRepository;
 
 
 public class MenuController implements Initializable {
@@ -38,6 +40,7 @@ public class MenuController implements Initializable {
     private Label profileName;
 
     private final SceneChanger sceneChanger = new  SceneChanger();
+    private final BookRepository bookRepository = new BookRepository();
 
     private List<Book> recentlyAdded;
     private List<Book> recommendedBooks;
@@ -46,17 +49,45 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         profileName.setText(Session.getUser().getFirstName() + " " + Session.getUser().getLastName());
-
-        if(Session.getUser().getImagePath() != null){
-            Image image = new Image(new File(Session.getUser().getImagePath()).toURI().toString());
-            profileImage.setImage(image);
+        if(Session.getUser().getImagePath() != null && !Session.getUser().getImagePath().isEmpty()){
+            try {
+                Image image = new Image(new File(Session.getUser().getImagePath()).toURI().toString());
+                profileImage.setImage(image);
+            } catch (Exception e) {
+                profileImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+            }
+        } else {
+            profileImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
         }
 
-        recentlyAdded = new ArrayList<>(recentlyAdded());
-        recommendedBooks = new ArrayList<>(recommendedBooks());
+        // 1. Fetch ALL books once
+        List<Book> allBooks = bookRepository.getAll();
+        
+        // 2. Compute "Recently Added" -> highest IDs first (newest addition), capped at 10 items
+        List<Book> recentSorted = new ArrayList<>(allBooks);
+        recentSorted.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
+        recentlyAdded = new ArrayList<>();
+        for (int i = 0; i < Math.min(10, recentSorted.size()); i++) {
+            recentlyAdded.add(recentSorted.get(i));
+        }
+
+        // 3. Compute "Recommended" -> highest rating first (5 to 1), full catalog
+        List<Book> ratingSorted = new ArrayList<>(allBooks);
+        ratingSorted.sort((b1, b2) -> {
+            int ratingCompare = Integer.compare(b2.getRating(), b1.getRating());
+            if (ratingCompare == 0) {
+                // secondary sort alphabetically if ratings tie
+                return b1.getTitle().compareToIgnoreCase(b2.getTitle());
+            }
+            return ratingCompare;
+        });
+        recommendedBooks = new ArrayList<>(ratingSorted);
+
         int column = 0;
         int row = 1;
+
         try {
+            // Render Recently Added
             for (Book value : recentlyAdded) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/view/fxml/Card.fxml"));
@@ -66,21 +97,21 @@ public class MenuController implements Initializable {
                 cardLayout.getChildren().add(cardBox);
             }
 
-            for ( Book book : recommendedBooks){
+            // Render Recommended grid
+            for (Book book : recommendedBooks) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/view/fxml/Book.fxml"));
                 VBox bookBox = fxmlLoader.load();
                 BookController bookController = fxmlLoader.getController();
                 bookController.setData(book);
 
-                if(column == 6){
+                if (column == 6) {
                     column = 0;
-                    ++ row;
+                    ++row;
                 }
 
-                bookContainer.add(bookBox,column++,row);
-                GridPane.setMargin(bookBox,new Insets(10));
-
+                bookContainer.add(bookBox, column++, row);
+                GridPane.setMargin(bookBox, new Insets(10));
             }
         }
         catch (IOException e) {
@@ -88,141 +119,31 @@ public class MenuController implements Initializable {
         }
     }
 
-    private List<Book> recentlyAdded(){
-        List<Book> books = new ArrayList<>();
-        Book book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
+    // Dummy methods eliminated in favor of Dynamic Repositories
 
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-
-
-        return books;
-    }
-
-
-    private List<Book> recommendedBooks(){
-        List<Book> books = new ArrayList<>();
-        Book book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        book = new Book();
-        book.setTitle("THE PRINCE");
-        book.setImageSrc("/view/assets/test.png");
-        book.setAuthor("Machiavelli");
-
-        books.add(book);
-
-        return books;
+    @FXML
+    void goToBookManagement(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/view/fxml/Books.fxml", "Book Management", event);
     }
 
     @FXML
-    void goToBookManagement(ActionEvent event) {
-
+    void goToBooks(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/view/fxml/BrowseBooks.fxml", "Books", event);
     }
 
     @FXML
-    void goToBooks(ActionEvent event) {
-
+    void goToCirculation(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/view/fxml/Circulation.fxml", "Circulation", event);
     }
 
     @FXML
-    void goToCirculation(ActionEvent event) {
-
+    void goToMemberManagement(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/view/fxml/Members.fxml", "Member Management", event);
     }
 
     @FXML
-    void goToMemberManagement(ActionEvent event) {
-
-    }
-
-    @FXML
-    void goToMembers(ActionEvent event) {
-
+    void goToMembers(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/view/fxml/BrowseMembers.fxml", "Members", event);
     }
 
     @FXML
@@ -231,8 +152,8 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void goToStatistics(ActionEvent event) {
-
+    void goToStatistics(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/view/fxml/Statistics.fxml", "Statistics Dashboard", event);
     }
 
     @FXML

@@ -12,7 +12,6 @@ public class Alerts {
             alert.setTitle("Error");
             alert.setHeaderText("Error");
             alert.setContentText(message);
-            alert.showAndWait();
 
             Optional<ButtonType> result = alert.showAndWait();
             return result.isPresent() && result.get() == ButtonType.OK;

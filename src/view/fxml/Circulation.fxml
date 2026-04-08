@@ -1,14 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CirculationController">
+   <left>
+      <VBox prefHeight="800.0" prefWidth="900.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="900.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#back" prefHeight="53.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="64.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/btn_back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
+                     </padding>
+                  </Button>
+                  <Label text="Circulation Management">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="searchField" prefHeight="35.0" prefWidth="400.0" promptText="Search active loans..." />
+                  <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" prefWidth="100.0" text="Search" />
+                  <Button mnemonicParsing="false" onAction="#handleClearSearch" prefHeight="35.0" prefWidth="100.0" text="Clear" />
+               </children>
+            </HBox>
+            <TableView fx:id="loansTable" prefHeight="600.0" prefWidth="860.0" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colLoanId" prefWidth="70.0" text="Loan ID" />
+                  <TableColumn fx:id="colMemberId" prefWidth="100.0" text="Member ID" />
+                  <TableColumn fx:id="colMemberName" prefWidth="180.0" text="Member Name" />
+                  <TableColumn fx:id="colBookId" prefWidth="80.0" text="Book ID" />
+                  <TableColumn fx:id="colBookTitle" prefWidth="250.0" text="Book Title" />
+                  <TableColumn fx:id="colBorrowDate" prefWidth="140.0" text="Borrow Date" />
+               </columns>
+            </TableView>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #f7f7f7; -fx-border-color: #dedede; -fx-border-width: 0 0 0 1;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Lending &amp; Returning">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="40.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            
+            <VBox maxWidth="400.0" spacing="5.0">
+               <children>
+                  <Label text="Member ID" />
+                  <TextField fx:id="memberIdField" prefHeight="40.0" promptText="Enter Member ID">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
 
-</AnchorPane>
+            <VBox maxWidth="400.0" spacing="5.0">
+               <children>
+                  <Label text="Book ID" />
+                  <TextField fx:id="bookIdField" prefHeight="40.0" promptText="Enter Book ID">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
+
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleBorrow" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Borrow Book">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            
+            <Label text="Select a loan from the table to return:" textFill="#666666">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleReturn" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Return Selected Book">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+
+            <HBox alignment="CENTER" prefHeight="250.0" prefWidth="200.0" spacing="30.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="250.0" spacing="5.0">
+                     <children>
+                        <Label text="Reference: Member IDs" textFill="#2196f3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="memberRefList" prefHeight="200.0" prefWidth="200.0" style="-fx-font-size: 13;" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="250.0" spacing="5.0">
+                     <children>
+                        <Label text="Reference: Book IDs" textFill="#4caf50">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="bookRefList" prefHeight="200.0" prefWidth="200.0" style="-fx-font-size: 13;" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

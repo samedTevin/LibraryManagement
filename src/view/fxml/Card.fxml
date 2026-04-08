@@ -7,15 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="400.0" spacing="15.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CardController">
+<HBox fx:id="box" alignment="CENTER"     prefHeight="185.0" prefWidth="400.0" spacing="15.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CardController">
    <children>
       <ImageView fx:id="bookImage" fitHeight="155.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/test.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER_LEFT" prefHeight="185.0" prefWidth="246.0">
+      <VBox alignment="CENTER_LEFT" prefHeight="185.0" prefWidth="246.0" spacing="2.0">
          <children>
+            <Label fx:id="bookId" text="#ID" textFill="#999999">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
             <Label fx:id="bookName" prefHeight="91.0" prefWidth="244.0" text="THE PRINCE">
                <font>
                   <Font name="Berlin Sans FB Bold" size="24.0" />
@@ -26,12 +31,7 @@
                   <Font name="Berlin Sans FB" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/stars_5.png" />
-               </image>
-            </ImageView>
-         </children>
+          </children>
       </VBox>
    </children>
 </HBox>

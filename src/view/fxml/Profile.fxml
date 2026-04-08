@@ -3,265 +3,224 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
+<BorderPane prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: #f0f2f5;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
+    <!-- LEFT SIDE: Profile Summary -->
     <left>
-        <VBox prefHeight="800.0" prefWidth="398.0" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_CENTER" prefWidth="400.0" spacing="20.0" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 1 0 0;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="40.0" left="30.0" right="30.0" top="40.0" />
+            </padding>
             <children>
-                <VBox alignment="CENTER" prefHeight="816.0" prefWidth="398.0" spacing="30.0">
+                <ImageView fitHeight="60.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/shelfaware_logo_framed.png" />
+                    </image>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </ImageView>
+                
+                <VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: transparent;">
                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <ImageView fx:id="profileImage" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                            <image>
+                                <Image url="@../assets/placeholder_member.png" />
+                            </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#editImage" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #e4e6eb; -fx-text-fill: #050505; -fx-font-weight: bold; -fx-background-radius: 20px; -fx-cursor: hand;" text="Change Avatar" />
+                    </children>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="8.0">
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label fx:id="firstAndLastName" text="John Doe">
+                            <font>
+                                <Font name="System Bold" size="26.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="email" text="john.doe@example.com" textFill="#65676b">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+
+                <VBox spacing="10.0" style="-fx-background-color: #f7f8fa; -fx-background-radius: 10px; -fx-padding: 20px;">
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
                             <children>
-                                <ImageView fitHeight="79.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../assets/shelfaware_logo_framed.png" />
-                                    </image>
-                                    <HBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                                    </HBox.margin>
-                                </ImageView>
+                                <Label text="Member Since:" textFill="#65676b">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="creationDate" text="2024-01-01" />
                             </children>
                         </HBox>
-                        <VBox alignment="CENTER" prefHeight="783.0" prefWidth="398.0" spacing="10.0">
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
                             <children>
-                                <ImageView fx:id="profileImage" fitHeight="169.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true">
-                                    <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </VBox.margin>
-                           <image>
-                              <Image url="@../assets/people.png" />
-                           </image>
-                                </ImageView>
-                                <Button mnemonicParsing="false" onAction="#editImage" prefHeight="89.0" prefWidth="197.0">
+                                <Label text="Last Updated:" textFill="#65676b">
                                     <font>
-                                        <Font size="22.0" />
+                                        <Font name="System Bold" size="14.0" />
                                     </font>
-                           <graphic>
-                              <ImageView fitHeight="118.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../assets/btn_edit_image.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
-                           </padding>
-                                </Button>
-                                <Separator prefHeight="97.0" prefWidth="398.0" />
-                                <Label text="Welcome,">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="31.0" />
-                                    </font>
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" />
-                                    </VBox.margin>
                                 </Label>
-                                <Label fx:id="firstAndLastName" text="First and Last Name">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
-                                    </font>
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" />
-                                    </VBox.margin>
-                                </Label>
-                                <Label fx:id="email" text="Email">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
-                                    </font>
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" />
-                                    </VBox.margin>
-                                </Label>
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                                    <children>
-                                        <Label text="Creation Date:">
-                                            <font>
-                                                <Font name="Berlin Sans FB" size="24.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="creationDate" layoutX="10.0" layoutY="10.0" text="10/10/2010">
-                                            <font>
-                                                <Font name="Berlin Sans FB" size="24.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                    <VBox.margin>
-                                        <Insets />
-                                    </VBox.margin>
-                                </HBox>
-                                <HBox alignment="CENTER" prefHeight="94.0" prefWidth="398.0" spacing="10.0">
-                                    <children>
-                                        <Label text="Updated Date:">
-                                            <font>
-                                                <Font name="Berlin Sans FB" size="24.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="updatedDate" layoutX="10.0" layoutY="10.0" text="10/10/2010">
-                                            <font>
-                                                <Font name="Berlin Sans FB" size="24.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <Separator prefHeight="15.0" prefWidth="398.0" />
-                                <Button mnemonicParsing="false" onAction="#deleteAccount" prefHeight="94.0" prefWidth="194.0">
-                                    <VBox.margin>
-                                        <Insets bottom="30.0" />
-                                    </VBox.margin>
-                           <padding>
-                              <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
-                           </padding>
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../assets/btn_delete_account.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                                </Button>
+                                <Label fx:id="updatedDate" text="2024-04-01" />
                             </children>
-                        </VBox>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#deleteAccount" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #ffebe8; -fx-text-fill: #dc3545; -fx-font-weight: bold; -fx-background-radius: 5px; -fx-cursor: hand;" text="Deactivate Account" />
                     </children>
                 </VBox>
             </children>
         </VBox>
     </left>
+    
+    <!-- CENTER SIDE: Settings Panels -->
     <center>
-        <VBox prefHeight="800.0" prefWidth="1081.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="800.0" spacing="30.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
+            </padding>
             <children>
-                <HBox alignment="CENTER" prefHeight="141.0" prefWidth="1102.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
                     <children>
-                        <Label prefHeight="60.0" prefWidth="227.0" text="Profile Settings">
+                        <Label text="Account Settings">
                             <font>
-                                <Font name="Berlin Sans FB" size="31.0" />
+                                <Font name="System Bold" size="32.0" />
                             </font>
                         </Label>
-                        <Pane prefHeight="143.0" prefWidth="721.0" HBox.hgrow="ALWAYS" />
-                        <Button maxHeight="53.0" maxWidth="140.0" minHeight="53.0" minWidth="140.0" mnemonicParsing="false" onAction="#back" prefHeight="53.0" prefWidth="140.0">
-                            <graphic>
-                                <ImageView fitHeight="73.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../assets/btn_back.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
-                            </padding>
-                        </Button>
+                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#back" prefHeight="53.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                                   <graphic>
+                                      <ImageView fitHeight="64.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
+                                         <image>
+                                            <Image url="@../assets/btn_back.png" />
+                                         </image>
+                                      </ImageView>
+                                   </graphic>
+                                   <padding>
+                                      <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
+                                   </padding>
+                                </Button>
+                            </children>
+                        </HBox>
                     </children>
                 </HBox>
-                <Separator prefHeight="0.0" prefWidth="1102.0" />
-                <VBox prefHeight="399.0" prefWidth="1102.0" spacing="20.0">
+
+                <VBox prefWidth="800.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5); -fx-padding: 30px;">
                     <children>
-                        <Label prefHeight="25.0" prefWidth="172.0" text="Profile Details">
+                        <Label text="Personal Information">
                             <font>
-                                <Font size="27.0" />
+                                <Font name="System Bold" size="20.0" />
                             </font>
                         </Label>
-                        <VBox alignment="CENTER" prefHeight="349.0" prefWidth="1102.0" spacing="10.0">
+                        
+                        <HBox spacing="30.0">
                             <children>
-                                <Label text="First Name">
+                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="First Name" textFill="#65676b">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="firstNameEditText" prefHeight="45.0" style="-fx-background-color: #f7f8fa; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-padding: 10px;" />
+                                    </children>
+                                </VBox>
+                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Last Name" textFill="#65676b">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="lastNameEditText" prefHeight="45.0" style="-fx-background-color: #f7f8fa; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-padding: 10px;" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                        
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label text="Email Address" textFill="#65676b">
                                     <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
+                                        <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="firstNameEditText" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="350.0" prefHeight="40.0" prefWidth="350.0" />
-                                <Label layoutX="10.0" layoutY="37.0" text="Last Name">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="lastNameEditText" layoutX="10.0" layoutY="61.0" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="350.0" prefHeight="40.0" prefWidth="350.0" />
-                                <Label layoutX="10.0" layoutY="102.0" text="Email">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="emailEditText" layoutX="10.0" layoutY="149.0" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="350.0" prefHeight="40.0" prefWidth="350.0">
-                                    <VBox.margin>
-                                        <Insets bottom="10.0" />
-                                    </VBox.margin>
-                                </TextField>
-                        <Button mnemonicParsing="false" onAction="#updateProfile" prefHeight="89.0" prefWidth="197.0">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="118.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../assets/btn_update_profile.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <padding>
-                              <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
-                           </padding>
-                        </Button>
+                                <TextField fx:id="emailEditText" prefHeight="45.0" style="-fx-background-color: #f7f8fa; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-padding: 10px;" />
                             </children>
                         </VBox>
+
+                        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#updateProfile" prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: #1877f2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6px; -fx-cursor: hand;" text="Save Profile Details" />
+                            </children>
+                        </HBox>
                     </children>
                 </VBox>
-                <Separator layoutX="10.0" layoutY="110.0" prefWidth="200.0" />
-                <VBox layoutX="10.0" layoutY="113.0" prefHeight="314.0" prefWidth="1102.0">
+
+                <VBox prefWidth="800.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5); -fx-padding: 30px;">
                     <children>
-                        <Label text="Update Password">
+                        <Label text="Security Configurations">
                             <font>
-                                <Font size="27.0" />
+                                <Font name="System Bold" size="20.0" />
                             </font>
                         </Label>
-                        <VBox alignment="CENTER" prefHeight="227.0" prefWidth="1102.0" spacing="10.0">
+                        
+                        <HBox spacing="30.0">
                             <children>
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
-                                <Label text="New Password">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="passwordEditText" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="350.0" prefHeight="40.0" prefWidth="350.0" />
-                                <Label layoutX="10.0" layoutY="37.0" text="Confirm Password">
-                                    <font>
-                                        <Font name="Berlin Sans FB" size="24.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="confirmPasswordEditText" layoutX="10.0" layoutY="61.0" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="350.0" prefHeight="40.0" prefWidth="350.0">
-                           <VBox.margin>
-                              <Insets bottom="20.0" />
-                           </VBox.margin></TextField>
-                        <Button mnemonicParsing="false" onAction="#updatePassword" prefHeight="89.0" prefWidth="197.0">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="118.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../assets/btn_update_password.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <padding>
-                              <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
-                           </padding>
-                        </Button>
+                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="New Password" textFill="#65676b">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <PasswordField fx:id="passwordEditText" prefHeight="45.0" style="-fx-background-color: #f7f8fa; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-padding: 10px;" />
+                                    </children>
+                                </VBox>
+                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Confirm Password" textFill="#65676b">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <PasswordField fx:id="confirmPasswordEditText" prefHeight="45.0" style="-fx-background-color: #f7f8fa; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-padding: 10px;" />
+                                    </children>
+                                </VBox>
                             </children>
-                        </VBox>
+                        </HBox>
+
+                        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#updatePassword" prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: #38a55a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6px; -fx-cursor: hand;" text="Update Password" />
+                            </children>
+                        </HBox>
                     </children>
                 </VBox>
+
             </children>
         </VBox>
     </center>
