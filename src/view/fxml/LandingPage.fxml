@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LandingPageController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="122.0" fitWidth="379.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/shelfaware_logo_framed.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Polygon fill="#ff8e1f" layoutX="652.0" layoutY="71.0" points="-250.0, 29.0, 459.0, -71.0, -355.0, -71.0" stroke="#ff8e1f" strokeType="INSIDE" />
+                  <Polygon fill="#ff8e1f" layoutX="604.0" layoutY="74.0" points="507.0, 33.0, -202.0, 26.0, 507.0, -74.0" stroke="#ff8e1f" strokeType="INSIDE" />
+                  <Button layoutX="665.0" layoutY="35.0" mnemonicParsing="false" onAction="#register" prefHeight="43.0" prefWidth="204.0">
+                     <font>
+                        <Font name="Roboto" size="27.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="51.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/btn_register.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
+                     </padding>
+                  </Button>
+                  <Button layoutX="887.0" layoutY="35.0" mnemonicParsing="false" onAction="#login" prefHeight="43.0" prefWidth="204.0">
+                     <font>
+                        <Font name="Roboto" size="27.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="51.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/btn_login.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Polygon fill="#ff8e1f" layoutX="1327.0" layoutY="423.0" points="-577.0, 277.0, 173.0, 277.0, 28.0, -107.0" stroke="#ff8e1f" strokeType="INSIDE" />
+            <Polygon fill="#ff8e1f" layoutX="1253.0" layoutY="-33.0" points="247.0, 33.0, 247.0, 733.0, -462.0, 33.0" stroke="#ff8e1f" strokeType="INSIDE" />
+            <ImageView fitHeight="353.0" fitWidth="241.0" layoutX="881.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/book1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="246.0" fitWidth="171.0" layoutX="1070.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/book2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="266.0" fitWidth="168.0" layoutX="1307.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/book4.png" />
+               </image>
+            </ImageView>
+            <Circle fill="#ffcc9d" layoutX="382.0" layoutY="340.0" radius="334.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="227.0" fitWidth="153.0" layoutX="1220.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/book3.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="113.0" layoutY="150.0" prefHeight="70.0" prefWidth="566.0" text="Manage &amp; organize">
+               <font>
+                  <Font name="Roboto" size="66.0" />
+               </font>
+            </Label>
+            <Label layoutX="250.0" layoutY="217.0" prefHeight="87.0" prefWidth="197.0" text="books" textFill="#ff8e1f" underline="true">
+               <font>
+                  <Font name="Roboto" size="66.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="217.0" prefHeight="87.0" prefWidth="141.0" text="your">
+               <font>
+                  <Font name="Roboto" size="66.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="292.0" prefHeight="33.0" prefWidth="370.0" text="easily">
+               <font>
+                  <Font name="Roboto" size="66.0" />
+               </font>
+            </Label>
+            <Text fill="#797979" fontSmoothingType="LCD" layoutX="113.0" layoutY="391.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Experience a smarter way to manage your library. Our digital library system helps you organize, search, and access books effortlessly in one simple and modern platform." wrappingWidth="471.13671875">
+               <font>
+                  <Font name="Roboto" size="21.0" />
+               </font>
+            </Text>
+            <Button layoutX="242.0" layoutY="523.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="243.0">
+               <font>
+                  <Font name="Roboto" size="27.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="58.0" fitWidth="247.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/btn_lets_begin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="-20.0" left="-20.0" right="-20.0" top="-20.0" />
+               </padding>
+            </Button>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
