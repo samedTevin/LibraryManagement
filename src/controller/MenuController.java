@@ -6,11 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.FlowPane;
 import model.Book;
 import session.Session;
 import util.Alerts;
@@ -33,11 +37,25 @@ public class MenuController implements Initializable {
     @FXML
     private HBox cardLayout;
     @FXML
-    private GridPane bookContainer;
+    private FlowPane bookContainer;
+    @FXML
+    private Label profileName;
     @FXML
     private ImageView profileImage;
     @FXML
-    private Label profileName;
+    private TextField searchField;
+    @FXML
+    private Label recentlyAddedLabel;
+    @FXML
+    private ScrollPane recentlyAddedPane;
+    @FXML
+    private Separator sectionSeparator;
+    @FXML
+    private Label recommendedLabel;
+    @FXML
+    private ScrollPane recommendedScrollPane;
+
+    private List<Book> allBooks;
 
     private final SceneChanger sceneChanger = new  SceneChanger();
     private final BookRepository bookRepository = new BookRepository();
@@ -61,8 +79,26 @@ public class MenuController implements Initializable {
         }
 
         // 1. Fetch ALL books once
-        List<Book> allBooks = bookRepository.getAll();
+        allBooks = bookRepository.getAll();
         
+        // Add live search listener
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            performSearch(newValue);
+        });
+        
+        loadDefaultView();
+    }
+
+    private void loadDefaultView() {
+        // Toggle UI
+        recentlyAddedLabel.setVisible(true);
+        recentlyAddedLabel.setManaged(true);
+        recentlyAddedPane.setVisible(true);
+        recentlyAddedPane.setManaged(true);
+        sectionSeparator.setVisible(true);
+        sectionSeparator.setManaged(true);
+        recommendedLabel.setText("Recommended for you");
+
         // 2. Compute "Recently Added" -> highest IDs first (newest addition), capped at 10 items
         List<Book> recentSorted = new ArrayList<>(allBooks);
         recentSorted.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
@@ -76,19 +112,20 @@ public class MenuController implements Initializable {
         ratingSorted.sort((b1, b2) -> {
             int ratingCompare = Integer.compare(b2.getRating(), b1.getRating());
             if (ratingCompare == 0) {
-                // secondary sort alphabetically if ratings tie
                 return b1.getTitle().compareToIgnoreCase(b2.getTitle());
             }
             return ratingCompare;
         });
         recommendedBooks = new ArrayList<>(ratingSorted);
 
-        int column = 0;
-        int row = 1;
+        renderCards(recentlyAdded);
+        renderGrid(recommendedBooks);
+    }
 
+    private void renderCards(List<Book> books) {
+        cardLayout.getChildren().clear();
         try {
-            // Render Recently Added
-            for (Book value : recentlyAdded) {
+            for (Book value : books) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/view/fxml/Card.fxml"));
                 HBox cardBox = fxmlLoader.load();
@@ -96,27 +133,63 @@ public class MenuController implements Initializable {
                 cardController.setData(value);
                 cardLayout.getChildren().add(cardBox);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            // Render Recommended grid
-            for (Book book : recommendedBooks) {
+    private void renderGrid(List<Book> books) {
+        bookContainer.getChildren().clear();
+        try {
+            for (Book book : books) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/view/fxml/Book.fxml"));
                 VBox bookBox = fxmlLoader.load();
                 BookController bookController = fxmlLoader.getController();
                 bookController.setData(book);
 
-                if (column == 6) {
-                    column = 0;
-                    ++row;
-                }
-
-                bookContainer.add(bookBox, column++, row);
-                GridPane.setMargin(bookBox, new Insets(10));
+                bookContainer.getChildren().add(bookBox);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void onSearch(ActionEvent event) {
+        performSearch(searchField.getText());
+    }
+
+    @FXML
+    void onSearchIconClicked() {
+        performSearch(searchField.getText());
+    }
+
+    private void performSearch(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            loadDefaultView();
+            return;
+        }
+
+        // Search mode - hide recently added and section separator
+        recentlyAddedLabel.setVisible(false);
+        recentlyAddedLabel.setManaged(false);
+        recentlyAddedPane.setVisible(false);
+        recentlyAddedPane.setManaged(false);
+        sectionSeparator.setVisible(false);
+        sectionSeparator.setManaged(false);
+        
+        recommendedLabel.setText("Search Results for: " + query);
+
+        String filter = query.toLowerCase();
+        List<Book> filtered = new ArrayList<>();
+        for (Book b : allBooks) {
+            if (b.getTitle().toLowerCase().contains(filter) || b.getAuthor().toLowerCase().contains(filter)) {
+                filtered.add(b);
+            }
+        }
+
+        renderGrid(filtered);
     }
 
     // Dummy methods eliminated in favor of Dynamic Repositories

@@ -41,7 +41,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <TextField fx:id="searchField" prefHeight="35.0" prefWidth="400.0" promptText="Search by title or author..." />
+                  <TextField fx:id="searchField" onAction="#handleSearch" prefHeight="35.0" prefWidth="400.0" promptText="Search by title or author..." />
                   <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" prefWidth="100.0" text="Search" />
                   <Button mnemonicParsing="false" onAction="#handleClearSearch" prefHeight="35.0" prefWidth="100.0" text="Clear" />
                   <Label fx:id="resultsCountLabel" text="Found 0 books" textFill="#666666">

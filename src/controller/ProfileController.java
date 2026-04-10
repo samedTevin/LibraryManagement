@@ -165,10 +165,12 @@ public class ProfileController implements Initializable {
                 Image image = new Image(new File(Session.getUser().getImagePath()).toURI().toString());
                 profileImage.setImage(image);
             } catch (Exception e) {
-                profileImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+                var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
+                if (stream != null) profileImage.setImage(new Image(stream));
             }
         } else {
-            profileImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+            var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
+            if (stream != null) profileImage.setImage(new Image(stream));
         }
     }
 

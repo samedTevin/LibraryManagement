@@ -78,6 +78,21 @@ public class BookRepository {
         return books;
     }
 
+    public Book getById(int id) {
+        String sql = "SELECT * FROM books WHERE id = ?";
+        try (Connection connection = database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return extractBookFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Book> search(String query) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ?";

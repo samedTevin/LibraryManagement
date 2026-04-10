@@ -9,6 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -34,12 +35,12 @@
                <children>
                   <StackPane alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="347.0">
                      <children>
-                        <TextField prefHeight="40.0" prefWidth="347.0" promptText="Global Search..." style="-fx-background-radius: 20px; -fx-border-radius: 20px; -fx-border-color: #e0e0e0; -fx-background-color: #f9f9f9; -fx-padding: 5 15 5 15;">
+                        <TextField fx:id="searchField" onAction="#onSearch" prefHeight="40.0" prefWidth="347.0" promptText="Global Search..." style="-fx-background-radius: 20px; -fx-border-radius: 20px; -fx-border-color: #e0e0e0; -fx-background-color: #f9f9f9; -fx-padding: 5 15 5 15;">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                        <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="31.0" onMouseClicked="#onSearchIconClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/icon_search_20.png" />
                            </image>
@@ -261,22 +262,22 @@
    </left>
    
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="17.0" prefWidth="292.0" text="Recently Added" textFill="#202124">
+            <Label fx:id="recentlyAddedLabel" text="Recently Added" textFill="#202124">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ScrollPane prefHeight="260.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-background: #f4f6f9; -fx-border-color: transparent;">
+            <ScrollPane fx:id="recentlyAddedPane" fitToHeight="true" minHeight="260.0" prefHeight="280.0" style="-fx-background-color: transparent; -fx-background: #f4f6f9; -fx-border-color: transparent;">
                <content>
-                  <HBox fx:id="cardLayout" alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 10 10 20 10;" />
+                  <HBox fx:id="cardLayout" alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 10;" />
                </content>
             </ScrollPane>
             
-            <Separator prefWidth="200.0" />
+            <Separator fx:id="sectionSeparator" />
             
-            <Label layoutX="30.0" layoutY="30.0" prefHeight="17.0" prefWidth="400.0" text="Recommended for you" textFill="#202124">
+            <Label fx:id="recommendedLabel" text="Recommended for you" textFill="#202124">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -284,16 +285,13 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-background: #f4f6f9; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="recommendedScrollPane" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" pannable="true" style="-fx-background-color: transparent; -fx-background: #f4f6f9; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                <content>
-                  <GridPane fx:id="bookContainer" hgap="25.0" vgap="25.0">
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <FlowPane fx:id="bookContainer" hgap="25.0" vgap="25.0">
                      <padding>
                         <Insets bottom="20.0" left="10.0" right="20.0" top="10.0" />
                      </padding>
-                  </GridPane>
+                  </FlowPane>
                </content>
             </ScrollPane>
          </children>

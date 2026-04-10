@@ -75,11 +75,10 @@ public class CirculationController implements Initializable {
 
         // Books
         List<Book> books = bookRepository.getAll();
-        ObservableList<String> bookTitles = FXCollections.observableArrayList();
+        bookRefList.getItems().clear();
         for (Book b : books) {
-            bookTitles.add(b.getId() + " - " + b.getTitle());
+            bookRefList.getItems().add(b.getId() + " - " + b.getTitle() + " (Stock: " + b.getCount() + ")");
         }
-        bookRefList.setItems(bookTitles);
     }
 
     private void setupListListeners() {
@@ -151,14 +150,32 @@ public class CirculationController implements Initializable {
             int mId = Integer.parseInt(mIdStr);
             int bId = Integer.parseInt(bIdStr);
 
+            Member member = memberRepository.getById(mId);
+            if (member == null) {
+                Alerts.showError("Member not found. Please enter a valid Member ID.");
+                return;
+            }
+
+            Book book = bookRepository.getById(bId);
+            if (book == null) {
+                Alerts.showError("Book not found.");
+                return;
+            }
+
+            if (book.getCount() <= 0) {
+                Alerts.showWarning("Out of Stock: " + book.getTitle());
+                return;
+            }
+
             boolean success = loanRepository.borrowBook(mId, bId);
             if (success) {
                 Alerts.showInformation("Book borrowed successfully!");
                 memberIdField.clear();
                 bookIdField.clear();
                 loadLoans();
+                loadReferenceLists();
             } else {
-                Alerts.showError("Failed to borrow book. Check if the book count is > 0 and the Member/Book IDs are correct.");
+                Alerts.showError("Failed to borrow book. Check if the Member ID is correct.");
             }
         } catch (NumberFormatException e) {
             Alerts.showError("IDs must be numeric.");
@@ -178,6 +195,7 @@ public class CirculationController implements Initializable {
             if (success) {
                 Alerts.showInformation("Book returned successfully!");
                 loadLoans();
+                loadReferenceLists();
             } else {
                 Alerts.showError("Failed to return the book.");
             }

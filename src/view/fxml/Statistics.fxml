@@ -9,8 +9,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 
-<BorderPane     prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: #f4f6f9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StatisticsController">
+<BorderPane prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: #f4f6f9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StatisticsController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="1500.0" spacing="20.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
          <children>
@@ -38,83 +42,105 @@
       </HBox>
    </top>
    <center>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 5);">
+            <HBox alignment="CENTER" spacing="40.0">
                <children>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/menu_icon_books.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label text="Total Books" textFill="#888888">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalBooksLabel" text="0" textFill="#2196F3">
-                     <font>
-                        <Font name="System Bold" size="48.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="CENTER" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+                     <children>
+                        <Label text="Total Books" textFill="#888888">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalBooksLabel" text="0" textFill="#2196F3">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+                     <children>
+                        <Label text="Members" textFill="#888888">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalMembersLabel" text="0" textFill="#4CAF50">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+                     <children>
+                        <Label text="Active Loans" textFill="#888888">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="activeLoansLabel" text="0" textFill="#F44336">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
             
-            <VBox alignment="CENTER" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 5);" layoutX="610.0" layoutY="220.0">
+            <HBox alignment="CENTER" prefHeight="450.0" prefWidth="1400.0" spacing="40.0" VBox.vgrow="ALWAYS">
                <children>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/menu_icon_members_mgmt.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label text="Registered Members" textFill="#888888">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalMembersLabel" text="0" textFill="#4CAF50">
-                     <font>
-                        <Font name="System Bold" size="48.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="CENTER" prefHeight="450.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Library Inventory Status" textFill="#555555">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <PieChart fx:id="inventoryPieChart" prefHeight="380.0" prefWidth="550.0" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="450.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 5);" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Book Stock Levels" textFill="#555555">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <BarChart fx:id="stockBarChart" prefHeight="380.0" prefWidth="550.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
                </children>
-            </VBox>
-
-            <VBox alignment="CENTER" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 15px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 5);" layoutX="760.0" layoutY="220.0">
-               <children>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/menu_icon_manage.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label text="Active Loans" textFill="#888888">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="activeLoansLabel" text="0" textFill="#F44336">
-                     <font>
-                        <Font name="System Bold" size="48.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
+            </HBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+            <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
          </BorderPane.margin>
-      </HBox>
+      </VBox>
    </center>
 </BorderPane>

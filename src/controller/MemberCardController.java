@@ -17,15 +17,25 @@ public class MemberCardController {
         try {
             if (path != null && !path.isEmpty()) {
                 if (path.startsWith("/view/assets")) {
-                    memberImage.setImage(new javafx.scene.image.Image(getClass().getResourceAsStream(path)));
+                    var stream = getClass().getResourceAsStream(path);
+                    if (stream != null) {
+                        memberImage.setImage(new javafx.scene.image.Image(stream));
+                    } else {
+                        var fb = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
+                        if (fb != null) memberImage.setImage(new javafx.scene.image.Image(fb));
+                    }
                 } else {
                     java.io.File file = new java.io.File(path);
                     if (file.exists()) {
                         memberImage.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+                    } else {
+                        var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
+                        if (stream != null) memberImage.setImage(new javafx.scene.image.Image(stream));
                     }
                 }
             } else {
-                memberImage.setImage(new javafx.scene.image.Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+                var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
+                if (stream != null) memberImage.setImage(new javafx.scene.image.Image(stream));
             }
         } catch (Exception e) {}
         

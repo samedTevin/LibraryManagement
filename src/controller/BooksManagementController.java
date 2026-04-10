@@ -80,15 +80,22 @@ public class BooksManagementController implements Initializable {
         countField.setText(String.valueOf(book.getCount()));
         ratingField.setText(String.valueOf(book.getRating()));
         
-        this.currentImagePath = book.getImageSrc();
         if (currentImagePath != null && !currentImagePath.isEmpty()) {
             try {
                 if (currentImagePath.startsWith("/view/assets")) {
-                    bookImagePreview.setImage(new Image(getClass().getResourceAsStream(currentImagePath)));
+                    var stream = getClass().getResourceAsStream(currentImagePath);
+                    if (stream != null) {
+                        bookImagePreview.setImage(new Image(stream));
+                    } else {
+                        bookImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
+                    }
                 } else {
                     File file = new File(currentImagePath);
                     if (file.exists()) {
                         bookImagePreview.setImage(new Image(file.toURI().toString()));
+                    } else {
+                        var stream = getClass().getResourceAsStream("/view/assets/placeholder_book.png");
+                        if (stream != null) bookImagePreview.setImage(new Image(stream));
                     }
                 }
             } catch (Exception e) {
@@ -208,7 +215,10 @@ public class BooksManagementController implements Initializable {
         ratingField.clear();
         this.currentImagePath = "/view/assets/placeholder_book.png";
         try {
-            bookImagePreview.setImage(new Image(getClass().getResourceAsStream(currentImagePath)));
+            var stream = getClass().getResourceAsStream(currentImagePath);
+            if (stream != null) {
+                bookImagePreview.setImage(new Image(stream));
+            }
         } catch(Exception e) {}
         booksTable.getSelectionModel().clearSelection();
     }

@@ -76,15 +76,22 @@ public class MembersManagementController implements Initializable {
         emailField.setText(member.getEmail());
         phoneField.setText(member.getPhone());
         
-        this.currentImagePath = member.getImagePath();
         if (currentImagePath != null && !currentImagePath.isEmpty()) {
             try {
                 if (currentImagePath.startsWith("/view/assets")) {
-                    memberImagePreview.setImage(new Image(getClass().getResourceAsStream(currentImagePath)));
+                    var stream = getClass().getResourceAsStream(currentImagePath);
+                    if (stream != null) {
+                        memberImagePreview.setImage(new Image(stream));
+                    } else {
+                        memberImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+                    }
                 } else {
                     File file = new File(currentImagePath);
                     if (file.exists()) {
                         memberImagePreview.setImage(new Image(file.toURI().toString()));
+                    } else {
+                        var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
+                        if (stream != null) memberImagePreview.setImage(new Image(stream));
                     }
                 }
             } catch (Exception e) {
@@ -203,7 +210,10 @@ public class MembersManagementController implements Initializable {
         phoneField.clear();
         this.currentImagePath = "/view/assets/placeholder_member.png";
         try {
-            memberImagePreview.setImage(new Image(getClass().getResourceAsStream(currentImagePath)));
+            var stream = getClass().getResourceAsStream(currentImagePath);
+            if (stream != null) {
+                memberImagePreview.setImage(new Image(stream));
+            }
         } catch(Exception e) {}
         membersTable.getSelectionModel().clearSelection();
     }

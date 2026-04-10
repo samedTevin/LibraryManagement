@@ -110,17 +110,40 @@ public class MemberRepository {
         }
     }
 
-    public boolean delete(int id) {
-        String sql = "DELETE FROM members WHERE id=?";
+    public Member getById(int id) {
+        String sql = "SELECT * FROM members WHERE id = ?";
         try (Connection connection = database.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Member member = new Member();
+                    member.setId(rs.getInt("id"));
+                    member.setFirstName(rs.getString("first_name"));
+                    member.setLastName(rs.getString("last_name"));
+                    member.setEmail(rs.getString("email"));
+                    member.setPhone(rs.getString("phone"));
+                    member.setImagePath(rs.getString("imagePath"));
+                    return member;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public boolean delete(int id) {
+        String sql = "DELETE FROM members WHERE id = ?";
+        try (Connection connection = database.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             int rows = stmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
+            System.err.println("Error deleting member: " + e.getMessage());
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 }
