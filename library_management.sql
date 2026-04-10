@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS library_management;
-USE library_management;
+CREATE DATABASE IF NOT EXISTS shelfaware ;
+USE shelfaware;
 
 -- Create 'users' table (required for Login)
 CREATE TABLE IF NOT EXISTS users (
