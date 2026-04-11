@@ -22,7 +22,7 @@
 ShelfAware is a desktop library management system built with Java and JavaFX, developed as a term project for **SWE324 — Visual Programming**. It follows the MVC architectural pattern and provides a complete solution for managing books, members, and circulation workflows within a library environment.
 
 <p align="center">
-  <img src="src/view/assets/shelfaware_app_icon.png" alt="ShelfAware" width="250"/>
+  <img src="src/view/assets/shelfaware_app_icon.png" alt="ShelfAware" width="200"/>
 </p>
 
 ---
@@ -69,7 +69,7 @@ src/
 |--------------|-----------------------------|
 | Language     | Java 11+                    |
 | UI Framework | JavaFX                      |
-| Database     | MySQL / SQLite (via JDBC)   |
+| Database     | MySQL (via JDBC)   |
 | Architecture | MVC (Model-View-Controller) |
 | IDE          | IntelliJ IDEA / Eclipse     |
 
