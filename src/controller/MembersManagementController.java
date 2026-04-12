@@ -76,26 +76,32 @@ public class MembersManagementController implements Initializable {
         emailField.setText(member.getEmail());
         phoneField.setText(member.getPhone());
         
-        if (currentImagePath != null && !currentImagePath.isEmpty()) {
-            try {
-                if (currentImagePath.startsWith("/view/assets")) {
-                    var stream = getClass().getResourceAsStream(currentImagePath);
-                    if (stream != null) {
-                        memberImagePreview.setImage(new Image(stream));
-                    } else {
-                        memberImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
-                    }
+        // Update currentImagePath state and preview
+        this.currentImagePath = member.getImagePath();
+        updateImagePreview(currentImagePath);
+    }
+
+    private void updateImagePreview(String path) {
+        try {
+            if (path != null && !path.isEmpty()) {
+                if (path.startsWith("/view/assets")) {
+                    memberImagePreview.setImage(new Image(getClass().getResourceAsStream(path)));
                 } else {
-                    File file = new File(currentImagePath);
+                    File file = new File(path);
                     if (file.exists()) {
                         memberImagePreview.setImage(new Image(file.toURI().toString()));
                     } else {
-                        var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
-                        if (stream != null) memberImagePreview.setImage(new Image(stream));
+                        memberImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
                     }
                 }
-            } catch (Exception e) {
-                // Ignore image load error
+            } else {
+                memberImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+            }
+        } catch (Exception e) {
+            try {
+                memberImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+            } catch (Exception ex) {
+                Alerts.showError("Failed to update image: " + e.getMessage());
             }
         }
     }
@@ -124,14 +130,16 @@ public class MembersManagementController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             try {
+                // Save to root-level assets directory (not src)
                 String projectDir = System.getProperty("user.dir");
-                File assetsDir = new File(projectDir, "src/view/assets");
+                File assetsDir = new File(projectDir, "assets/members");
                 if (!assetsDir.exists()) assetsDir.mkdirs();
 
                 File destFile = new File(assetsDir, selectedFile.getName());
                 Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                currentImagePath = "/view/assets/" + selectedFile.getName();
+                // Store the relative path from project root
+                currentImagePath = "assets/members/" + selectedFile.getName();
                 memberImagePreview.setImage(new Image(destFile.toURI().toString()));
             } catch (IOException e) {
                 Alerts.showError("Failed to save image: " + e.getMessage());
@@ -209,12 +217,7 @@ public class MembersManagementController implements Initializable {
         emailField.clear();
         phoneField.clear();
         this.currentImagePath = "/view/assets/placeholder_member.png";
-        try {
-            var stream = getClass().getResourceAsStream(currentImagePath);
-            if (stream != null) {
-                memberImagePreview.setImage(new Image(stream));
-            }
-        } catch(Exception e) {}
+        updateImagePreview(currentImagePath);
         membersTable.getSelectionModel().clearSelection();
     }
 

@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import model.Book;
 import repository.BookRepository;
 import util.Alerts;
@@ -20,8 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -80,27 +77,31 @@ public class BooksManagementController implements Initializable {
         countField.setText(String.valueOf(book.getCount()));
         ratingField.setText(String.valueOf(book.getRating()));
         
-        if (currentImagePath != null && !currentImagePath.isEmpty()) {
-            try {
-                if (currentImagePath.startsWith("/view/assets")) {
-                    var stream = getClass().getResourceAsStream(currentImagePath);
-                    if (stream != null) {
-                        bookImagePreview.setImage(new Image(stream));
-                    } else {
-                        bookImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
-                    }
+        // Update currentImagePath state and preview
+        this.currentImagePath = book.getImageSrc();
+        updateImagePreview(currentImagePath);
+    }
+
+    private void updateImagePreview(String path) {
+        try {
+            if (path != null && !path.isEmpty()) {
+                if (path.startsWith("/view/assets")) {
+                    bookImagePreview.setImage(new Image(getClass().getResourceAsStream(path)));
                 } else {
-                    File file = new File(currentImagePath);
+                    File file = new File(path);
                     if (file.exists()) {
                         bookImagePreview.setImage(new Image(file.toURI().toString()));
                     } else {
-                        var stream = getClass().getResourceAsStream("/view/assets/placeholder_book.png");
-                        if (stream != null) bookImagePreview.setImage(new Image(stream));
+                        bookImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
                     }
                 }
-            } catch (Exception e) {
-                // Ignore image load error
+            } else {
+                bookImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
             }
+        } catch (Exception e) {
+            try {
+                bookImagePreview.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
+            } catch (Exception ex) {}
         }
     }
 
@@ -128,15 +129,16 @@ public class BooksManagementController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             try {
-                // Let's copy the file to src/view/assets directory to make it portable
+                // Save to root-level assets directory (not src)
                 String projectDir = System.getProperty("user.dir");
-                File assetsDir = new File(projectDir, "src/view/assets");
+                File assetsDir = new File(projectDir, "assets/books");
                 if (!assetsDir.exists()) assetsDir.mkdirs();
 
                 File destFile = new File(assetsDir, selectedFile.getName());
                 Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                currentImagePath = "/view/assets/" + selectedFile.getName();
+                // Store the relative path from project root
+                currentImagePath = "assets/books/" + selectedFile.getName();
                 bookImagePreview.setImage(new Image(destFile.toURI().toString()));
             } catch (IOException e) {
                 Alerts.showError("Failed to save image: " + e.getMessage());
@@ -214,12 +216,7 @@ public class BooksManagementController implements Initializable {
         countField.clear();
         ratingField.clear();
         this.currentImagePath = "/view/assets/placeholder_book.png";
-        try {
-            var stream = getClass().getResourceAsStream(currentImagePath);
-            if (stream != null) {
-                bookImagePreview.setImage(new Image(stream));
-            }
-        } catch(Exception e) {}
+        updateImagePreview(currentImagePath);
         booksTable.getSelectionModel().clearSelection();
     }
 

@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Create 'books' table (with rating field)
 CREATE TABLE IF NOT EXISTS books (
-    id INT AUTO_INCREMENT PRIMARY KEY, 
-    title VARCHAR(255) NOT NULL, 
-    author VARCHAR(255) NOT NULL, 
-    imageSrc VARCHAR(255), 
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    imageSrc VARCHAR(255),
     count INT NOT NULL DEFAULT 0,
     rating INT NOT NULL DEFAULT 3
 );

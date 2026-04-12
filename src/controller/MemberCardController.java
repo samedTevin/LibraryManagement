@@ -17,28 +17,23 @@ public class MemberCardController {
         try {
             if (path != null && !path.isEmpty()) {
                 if (path.startsWith("/view/assets")) {
-                    var stream = getClass().getResourceAsStream(path);
-                    if (stream != null) {
-                        memberImage.setImage(new javafx.scene.image.Image(stream));
-                    } else {
-                        var fb = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
-                        if (fb != null) memberImage.setImage(new javafx.scene.image.Image(fb));
-                    }
+                    memberImage.setImage(new javafx.scene.image.Image(getClass().getResourceAsStream(path)));
                 } else {
                     java.io.File file = new java.io.File(path);
                     if (file.exists()) {
                         memberImage.setImage(new javafx.scene.image.Image(file.toURI().toString()));
                     } else {
-                        var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
-                        if (stream != null) memberImage.setImage(new javafx.scene.image.Image(stream));
+                        memberImage.setImage(new javafx.scene.image.Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
                     }
                 }
             } else {
-                var stream = getClass().getResourceAsStream("/view/assets/placeholder_member.png");
-                if (stream != null) memberImage.setImage(new javafx.scene.image.Image(stream));
+                memberImage.setImage(new javafx.scene.image.Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
             }
-        } catch (Exception e) {}
-        
+        } catch (Exception e) {
+            try {
+                memberImage.setImage(new javafx.scene.image.Image(getClass().getResourceAsStream("/view/assets/placeholder_member.png")));
+            } catch (Exception ex) {}
+        }
         memberId.setText("#" + member.getId());
         memberName.setText(member.getFirstName() + " " + member.getLastName());
         memberEmail.setText(member.getEmail());

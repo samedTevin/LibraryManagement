@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import model.Book;
 
-import java.util.Objects;
 
 public class CardController {
 
@@ -47,9 +46,8 @@ public class CardController {
         } catch (Exception e) {
             try {
                 bookImage.setImage(new Image(getClass().getResourceAsStream("/view/assets/placeholder_book.png")));
-            } catch (Exception ex) {/* ignore */}
+            } catch (Exception ex) {}
         }
-
         bookId.setText("#" + book.getId());
         bookName.setText(book.getTitle());
         authorName.setText(book.getAuthor());
