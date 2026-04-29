@@ -133,6 +133,25 @@ public class MemberRepository {
         return null;
     }
 
+    public boolean emailExists(String email) {
+        String sql = "SELECT id FROM members WHERE email = ?";
+
+        try (Connection connection = database.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public boolean delete(int id) {
         String sql = "DELETE FROM members WHERE id = ?";
         try (Connection connection = database.getConnection();

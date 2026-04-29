@@ -150,11 +150,19 @@ public class BooksManagementController implements Initializable {
     void handleAdd(ActionEvent event) {
         if (!validateInput()) return;
 
+        String title = titleField.getText().trim();
+        String author = authorField.getText().trim();
+
+        if (bookRepository.bookExists(title, author)) {
+            Alerts.showError("This book already exists.");
+            return;
+        }
+
         Book book = new Book();
-        book.setTitle(titleField.getText());
-        book.setAuthor(authorField.getText());
-        book.setCount(Integer.parseInt(countField.getText()));
-        book.setRating(Integer.parseInt(ratingField.getText()));
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setCount(Integer.parseInt(countField.getText().trim()));
+        book.setRating(Integer.parseInt(ratingField.getText().trim()));
         book.setImageSrc(currentImagePath);
 
         if (bookRepository.add(book)) {
@@ -162,7 +170,7 @@ public class BooksManagementController implements Initializable {
             loadBooks();
             clearForm();
         } else {
-            Alerts.showError("Failed to add book to the database. Please check your database connection and schema.");
+            Alerts.showError("Failed to add book to the database.");
         }
     }
 
@@ -172,12 +180,24 @@ public class BooksManagementController implements Initializable {
             Alerts.showError("Please select a book from the table to update.");
             return;
         }
+
         if (!validateInput()) return;
 
-        selectedBook.setTitle(titleField.getText());
-        selectedBook.setAuthor(authorField.getText());
-        selectedBook.setCount(Integer.parseInt(countField.getText()));
-        selectedBook.setRating(Integer.parseInt(ratingField.getText()));
+        String newTitle = titleField.getText().trim();
+        String newAuthor = authorField.getText().trim();
+
+        boolean titleChanged = !newTitle.equalsIgnoreCase(selectedBook.getTitle());
+        boolean authorChanged = !newAuthor.equalsIgnoreCase(selectedBook.getAuthor());
+
+        if ((titleChanged || authorChanged) && bookRepository.bookExists(newTitle, newAuthor)) {
+            Alerts.showError("This book already exists.");
+            return;
+        }
+
+        selectedBook.setTitle(newTitle);
+        selectedBook.setAuthor(newAuthor);
+        selectedBook.setCount(Integer.parseInt(countField.getText().trim()));
+        selectedBook.setRating(Integer.parseInt(ratingField.getText().trim()));
         selectedBook.setImageSrc(currentImagePath);
 
         if (bookRepository.update(selectedBook)) {

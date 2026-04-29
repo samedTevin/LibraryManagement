@@ -100,6 +100,7 @@ public class ProfileController implements Initializable {
 
 
     public void updateProfile(ActionEvent event) {
+
         String fName = firstNameEditText.getText().trim();
         String lName = lastNameEditText.getText().trim();
         String mail = emailEditText.getText().trim();
@@ -114,13 +115,28 @@ public class ProfileController implements Initializable {
             return;
         }
 
+        String currentMail = Session.getUser().getEmail();
+
+        // checking for existing mails
+        if (!mail.equalsIgnoreCase(currentMail)
+                && userRepository.emailExists(mail)) {
+
+            Alerts.showError("This email is already used by another account.");
+            return;
+        }
+
         Session.getUser().setFirstName(fName);
         Session.getUser().setLastName(lName);
         Session.getUser().setEmail(mail);
 
         userRepository.updateProfileDetails(Session.getUser());
 
-        Session.setUser(userRepository.getByEmailAndPassword(Session.getUser().getEmail(), Session.getUser().getPassword()));
+        Session.setUser(
+                userRepository.getByEmailAndPassword(
+                        Session.getUser().getEmail(),
+                        Session.getUser().getPassword()
+                )
+        );
 
         Alerts.showInformation("Profile Details updated successfully.");
 

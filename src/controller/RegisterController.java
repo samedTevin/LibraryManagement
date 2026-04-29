@@ -36,17 +36,15 @@ public class RegisterController {
 
     @FXML
     public void initialize() {
-        // Sync texts bidirectionally
         passwordTextField.textProperty().bindBidirectional(passwordPasswordField.textProperty());
         confirmPasswordTextField.textProperty().bindBidirectional(confirmPasswordPasswordField.textProperty());
 
-        // Hide text fields by default
         passwordTextField.setVisible(false);
         confirmPasswordTextField.setVisible(false);
     }
 
     public void goToLogin(ActionEvent event) throws IOException {
-        sceneChanger.changeScene("/view/fxml/Login.fxml","Login",event);
+        sceneChanger.changeScene("/view/fxml/Login.fxml", "Login", event);
     }
 
     public void register(ActionEvent event) {
@@ -57,12 +55,15 @@ public class RegisterController {
         String confirmPass = confirmPasswordPasswordField.getText();
 
         if (fName == null || fName.trim().isEmpty() ||
-            lName == null || lName.trim().isEmpty() ||
-            mail == null || mail.trim().isEmpty() ||
-            pass == null || pass.trim().isEmpty()) {
+                lName == null || lName.trim().isEmpty() ||
+                mail == null || mail.trim().isEmpty() ||
+                pass == null || pass.trim().isEmpty() ||
+                confirmPass == null || confirmPass.trim().isEmpty()) {
             Alerts.showError("Please fill in all fields.");
             return;
         }
+
+        mail = mail.trim();
 
         if (!mail.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             Alerts.showError("Please enter a valid email address.");
@@ -79,9 +80,22 @@ public class RegisterController {
             return;
         }
 
-        User user = new User(fName, lName, mail, pass);
-        userRepository.add(user);
+        if (userRepository.emailExists(mail)) {
+            Alerts.showError("This email is already registered.");
+            return;
+        }
+
+        User user = new User(fName.trim(), lName.trim(), mail, pass);
+
+        boolean registered = userRepository.add(user);
+
+        if (!registered) {
+            Alerts.showError("Registration failed. Please try again.");
+            return;
+        }
+
         Alerts.showInformation("Registration successful!");
+
         try {
             sceneChanger.changeScene("/view/fxml/Login.fxml", "Login", event);
         } catch (IOException e) {
@@ -91,13 +105,15 @@ public class RegisterController {
 
     public void togglePassword() {
         boolean show = showPasswordCheckBox.isSelected();
+
         passwordTextField.setVisible(show);
         passwordPasswordField.setVisible(!show);
+
         confirmPasswordTextField.setVisible(show);
         confirmPasswordPasswordField.setVisible(!show);
     }
 
     public void back(ActionEvent event) throws IOException {
-        sceneChanger.changeScene("/view/fxml/LandingPage.fxml","ShelfAware",event);
+        sceneChanger.changeScene("/view/fxml/LandingPage.fxml", "ShelfAware", event);
     }
 }

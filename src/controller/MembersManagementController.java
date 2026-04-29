@@ -151,11 +151,18 @@ public class MembersManagementController implements Initializable {
     void handleAdd(ActionEvent event) {
         if (!validateInput()) return;
 
+        String mail = emailField.getText().trim();
+
+        if (memberRepository.emailExists(mail)) {
+            Alerts.showError("This member email is already registered.");
+            return;
+        }
+
         Member member = new Member();
-        member.setFirstName(firstNameField.getText());
-        member.setLastName(lastNameField.getText());
-        member.setEmail(emailField.getText());
-        member.setPhone(phoneField.getText());
+        member.setFirstName(firstNameField.getText().trim());
+        member.setLastName(lastNameField.getText().trim());
+        member.setEmail(mail);
+        member.setPhone(phoneField.getText().trim());
         member.setImagePath(currentImagePath);
 
         if (memberRepository.add(member)) {
@@ -173,12 +180,22 @@ public class MembersManagementController implements Initializable {
             Alerts.showError("Please select a member from the table to update.");
             return;
         }
+
         if (!validateInput()) return;
 
-        selectedMember.setFirstName(firstNameField.getText());
-        selectedMember.setLastName(lastNameField.getText());
-        selectedMember.setEmail(emailField.getText());
-        selectedMember.setPhone(phoneField.getText());
+        String newMail = emailField.getText().trim();
+
+        if (!newMail.equalsIgnoreCase(selectedMember.getEmail())
+                && memberRepository.emailExists(newMail)) {
+
+            Alerts.showError("This email is already used by another member.");
+            return;
+        }
+
+        selectedMember.setFirstName(firstNameField.getText().trim());
+        selectedMember.setLastName(lastNameField.getText().trim());
+        selectedMember.setEmail(newMail);
+        selectedMember.setPhone(phoneField.getText().trim());
         selectedMember.setImagePath(currentImagePath);
 
         if (memberRepository.update(selectedMember)) {

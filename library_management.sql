@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS books (
     author VARCHAR(255) NOT NULL,
     imageSrc VARCHAR(255),
     count INT NOT NULL DEFAULT 0,
-    rating INT NOT NULL DEFAULT 3
+    rating INT NOT NULL DEFAULT 3,
+    UNIQUE(title, author)
 );
 
 -- Create 'members' table
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS members (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(50),
     imagePath VARCHAR(255)
 );
@@ -45,8 +46,10 @@ CREATE TABLE IF NOT EXISTS loans (
     FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
 );
 
--- Select queries to verify data
 SELECT * FROM users;
+
 SELECT * FROM members;
+
 SELECT * FROM books;
+
 SELECT * FROM loans;
